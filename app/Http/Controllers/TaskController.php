@@ -8,9 +8,14 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        return Task::all();
+        $this->authorizeResource(Task::class , 'task');
+    }
+
+    public function index(Task $task)
+    {
+        return Task::orderBy('id', 'asc')->get();
     }
 
     public function store(StoreTaskRequest $request, Task $task)
@@ -31,7 +36,6 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
-
         return $task;
     }
 

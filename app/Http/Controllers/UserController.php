@@ -9,9 +9,9 @@ use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(User $user)
     {
-        return User::all();
+        return User::with('taskGroups.tasks')->get();
     }
 
     public function store(StoreUserRequest $request, User $user)

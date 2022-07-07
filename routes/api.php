@@ -31,7 +31,13 @@ Route::group([
 
 });
 Route::middleware('auth')->group(function () {
-    Route::apiResource('taskgroups', TaskGroupController::class);
+    Route::get('taskgroups', [TaskGroupController::class, 'index']);
+    Route::get('taskgroups/{taskGroup}', [TaskGroupController::class, 'show']);
+    Route::post('taskgroups', [TaskGroupController::class, 'store']);
+    Route::put('taskgroups/{taskGroup}', [TaskGroupController::class, 'update']);
+    Route::delete('taskgroups/{taskGroup}', [TaskGroupController::class, 'destroy']);
+
+
     Route::apiResource('tasks', TaskController::class);
 
     Route::get('taskgroups/{taskGroup}/tasks', [TaskGroupController::class, 'tasksByList']);

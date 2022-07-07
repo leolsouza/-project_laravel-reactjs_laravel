@@ -8,9 +8,15 @@ use App\Models\TaskGroup;
 
 class TaskGroupController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        return TaskGroup::all();
+        $this->authorizeResource(TaskGroup::class , 'taskGroup');
+    }
+
+    public function index(TaskGroup $taskGroup)
+    {
+
+        return auth()->user()->taskGroups()->with('tasks')->get();
     }
 
     public function store(StoreTaskGroupRequest $request, TaskGroup $taskGroup)
@@ -25,13 +31,13 @@ class TaskGroupController extends Controller
 
     public function update(UpdateTaskGroupRequest $request, TaskGroup $taskGroup)
     {
-        return $taskGroup->update($request->validated);
+        $response = $taskGroup->update($request->validated());
+        return $taskGroup;
     }
 
     public function destroy(TaskGroup $taskGroup)
     {
         $taskGroup->delete();
-
         return $taskGroup;
     }
 

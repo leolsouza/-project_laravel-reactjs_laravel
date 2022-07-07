@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TaskPolicy
@@ -18,7 +19,7 @@ class TaskPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +31,10 @@ class TaskPolicy
      */
     public function view(User $user, Task $task)
     {
-        //
+        return $user->id === $task->taskGroup->user_id
+
+            ? Response::allow()
+            : Response::deny('Você não é o dono dessa task');
     }
 
     /**
@@ -53,7 +57,7 @@ class TaskPolicy
      */
     public function update(User $user, Task $task)
     {
-        //
+        return $user->id === $task->taskGroup->user->id;
     }
 
     /**
@@ -65,7 +69,7 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task)
     {
-        //
+        return $user->id === $task->taskGroup->user->id;
     }
 
     /**

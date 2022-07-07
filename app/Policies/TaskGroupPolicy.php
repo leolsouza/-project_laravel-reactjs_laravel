@@ -18,7 +18,7 @@ class TaskGroupPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class TaskGroupPolicy
      */
     public function view(User $user, TaskGroup $taskGroup)
     {
-        //
+        return $user->id === $taskGroup->user->id;
     }
 
     /**
@@ -41,7 +41,7 @@ class TaskGroupPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class TaskGroupPolicy
      */
     public function update(User $user, TaskGroup $taskGroup)
     {
-        //
+        return $user->id === $taskGroup->user->id;
     }
 
     /**
@@ -65,7 +65,7 @@ class TaskGroupPolicy
      */
     public function delete(User $user, TaskGroup $taskGroup)
     {
-        //
+        return $user->id === $taskGroup->user->id;
     }
 
     /**
@@ -91,4 +91,10 @@ class TaskGroupPolicy
     {
         //
     }
+
+    public function taskByList(User $user, TaskGroup $taskGroup)
+    {
+        return $user->id === $taskGroup->user->id;
+    }
+
 }
