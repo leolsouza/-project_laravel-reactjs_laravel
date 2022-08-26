@@ -10,7 +10,7 @@ class TaskGroupController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(TaskGroup::class , 'taskGroup');
+       $this->authorizeResource(TaskGroup::class , 'taskGroup');
     }
 
     public function index(TaskGroup $taskGroup)
@@ -21,7 +21,10 @@ class TaskGroupController extends Controller
 
     public function store(StoreTaskGroupRequest $request, TaskGroup $taskGroup)
     {
-       return TaskGroup::create($request->validated());
+       return TaskGroup::create([
+        'title' => $request->input('title'),
+        'user_id' => auth()->user()->id
+       ]);
     }
 
     public function show(TaskGroup $taskGroup)

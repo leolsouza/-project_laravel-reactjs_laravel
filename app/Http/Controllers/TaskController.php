@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 
 class TaskController extends Controller
+
 {
     public function __construct()
     {
@@ -15,7 +16,7 @@ class TaskController extends Controller
 
     public function index(Task $task)
     {
-        return Task::orderBy('id', 'asc')->get();
+        return Task::orderBy('updated_at', 'asc')->get();
     }
 
     public function store(StoreTaskRequest $request, Task $task)
@@ -44,5 +45,7 @@ class TaskController extends Controller
         $task->update([
             'completed' => true
         ]);
+
+        return $task;
     }
 }
